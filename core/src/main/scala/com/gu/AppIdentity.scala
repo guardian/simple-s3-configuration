@@ -13,15 +13,15 @@ import scala.util.{Failure, Success, Try}
 sealed trait AppIdentity
 
 case class AwsIdentity(
-                        app: String,
-                        stack: String,
-                        stage: String,
-                        region: String
-                      ) extends AppIdentity
+  app: String,
+  stack: String,
+  stage: String,
+  region: String
+) extends AppIdentity
 
 case class DevIdentity(
-                        app: String
-                      ) extends AppIdentity
+  app: String
+) extends AppIdentity
 
 object AppIdentity {
   private val logger = LoggerFactory.getLogger(this.getClass)
@@ -102,9 +102,9 @@ object AppIdentity {
   }
 
   def whoAmI(
-              defaultAppName: String,
-              credentials: => AWSCredentialsProvider = DefaultAWSCredentialsProviderChain.getInstance
-            ): AppIdentity = {
+    defaultAppName: String,
+    credentials: => AWSCredentialsProvider = DefaultAWSCredentialsProviderChain.getInstance
+  ): AppIdentity = {
     val result = fromTeamcityEnvVariables(defaultAppName)
       .orElse(fromLambdaEnvVariables())
       .orElse(fromASGTags(credentials))
